@@ -11,7 +11,7 @@ const SHEET_URL =
 
 /* ===== RANDOM CÓ TỶ LỆ ===== */
 function weightedRandom(min, max) {
-  const split = 1400000;
+  const split = 2000000;
   if (Math.random() < 0.98) {
     const t = Math.random() ** 2.5;
     return Math.floor(min + t * (Math.min(split, max) - min));
