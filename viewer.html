@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Xem kết quả quay số</title>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<style>
+body{font-family:Arial;text-align:center;padding:20px;}
+li{margin:6px 0;font-size:18px;}
+</style>
+</head>
+<body>
+<h2>KẾT QUẢ NGƯỜI CHƠI</h2>
+<ul id="list"></ul>
+
+<script>
+const firebaseConfig = {
+  apiKey: "...",
+  authDomain: "...",
+  databaseURL: "https://xxx.firebaseio.com",
+  projectId: "...",
+  storageBucket: "...",
+  messagingSenderId: "...",
+  appId: "..."
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+db.ref("results").on("child_added",snap=>{
+  const d=snap.val();
+  const li=document.createElement("li");
+  li.innerText=`${d.time} | ${d.name} | ${d.number.toLocaleString()} | ${d.ua}`;
+  document.getElementById("list").prepend(li);
+});
+</script>
+</body>
+</html>
