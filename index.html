@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>🎄 QUÀ CHO HƯƠNG 🎄</title>
+<title>🎄 Quay Số Noel 🎄</title>
 <link rel="stylesheet" href="style.css">
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
@@ -25,16 +25,19 @@
   </div>
 </div>
 
-<!-- CONTAINER CHÍNH -->
-<div id="container">
+<!-- XÁC NHẬN TÊN -->
+<div id="confirmNameContainer">
+  <input type="text" id="playerName" placeholder="Nhập tên bạn">
+  <button onclick="confirmName()">BẮT ĐẦU</button>
+</div>
+
+<!-- CONTAINER GAME -->
+<div id="container" style="display:none;">
   <h1>🎄 CHÚC MỪNG NGƯỜI YÊU CỦA ANH 🎄</h1>
-  <div id="nameInputContainer">
-    <input type="text" id="playerName" placeholder="Nhập tên bạn">
-    <button onclick="start()">BẮT ĐẦU</button>
-  </div>
   <div id="number">------</div>
   <div class="buttons">
     <button onclick="stop()">⏹ DỪNG</button>
+    <button onclick="restart()">🔄 QUAY LẠI</button>
   </div>
 </div>
 
@@ -43,7 +46,7 @@
   <div id="notify-content">
     <div id="notify-text">CHÚC MỪNG EM YÊU ĐÃ QUAY ĐƯỢC</div>
     <div id="notify-number">------</div>
-    <button id="notify-ok" onclick="hideNotify()">YÊU ANH <3</button>
+    <button id="notify-ok" onclick="hideNotify()">OK</button>
   </div>
 </div>
 
