@@ -91,3 +91,24 @@ document.getElementById("spinInput").onchange = e => {
 document.getElementById("winInput").onchange = e => {
   win.src = URL.createObjectURL(e.target.files[0]);
 };
+/* ===== HIỆU ỨNG CHỮ NHIỀU MÀU ===== */
+const rainbowColors = [
+  "#FF0000", "#FF7F00", "#FFFF00", "#00FF00",
+  "#0000FF", "#4B0082", "#8B00FF"
+];
+
+let rainbowIndex = 0;
+
+function rainbowText() {
+  // Thay đổi màu tiêu đề
+  const title = document.querySelector("#container h1");
+  title.style.color = rainbowColors[rainbowIndex];
+
+  // Thay đổi màu chữ số
+  num.style.color = rainbowColors[(rainbowIndex + 3) % rainbowColors.length];
+
+  rainbowIndex = (rainbowIndex + 1) % rainbowColors.length;
+}
+
+// Chạy liên tục mỗi 100ms
+setInterval(rainbowText, 100);
