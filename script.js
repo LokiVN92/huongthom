@@ -1,118 +1,91 @@
-let running=false;
-let interval;
-let playerName="";
-let confirmed=false;
-
-/* Firebase config */
+// 🔥 FIREBASE CONFIG (CỦA BẠN)
 const firebaseConfig = {
-  apiKey: "...",
-  authDomain: "...",
-  databaseURL: "https://xxx.firebaseio.com",
-  projectId: "...",
-  storageBucket: "...",
-  messagingSenderId: "...",
-  appId: "..."
+  apiKey: "AIzaSyDaYssLoPgeyBzzBwq7DK2R-dG3uHlhp7M",
+  authDomain: "lucthom19989.firebaseapp.com",
+  databaseURL: "https://lucthom19989-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "lucthom19989",
+  storageBucket: "lucthom19989.firebasestorage.app",
+  messagingSenderId: "355426108698",
+  appId: "1:355426108698:web:65f928b571d9f09a93d8a3"
 };
+
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-/* DOM */
-const num = document.getElementById("number");
-const spin = document.getElementById("spin");
-const win = document.getElementById("win");
+// ================= GAME =================
+let player = "";
+let running = false;
+let timer = null;
+let result = 0;
 
-/* RANDOM */
-function weightedRandom(min,max){
-  const split=1400000;
-  if(Math.random()<0.98){ const t=Math.random()**2.5; return Math.floor(min+t*(Math.min(split,max)-min)); }
-  const t=Math.random()**4;
-  return Math.floor(split+t*(max-split));
-}
+const spinMusic = document.getElementById("spinMusic");
+const winMusic = document.getElementById("winMusic");
 
-/* XÁC NHẬN TÊN */
-function confirmName(){
-  const input = document.getElementById("playerName");
-  if(!input.value.trim()){ alert("Nhập tên bạn trước khi bắt đầu!"); return; }
-  const name=input.value.trim();
-  if(confirm(`Bạn có phải là ${name}?`)){
-    playerName=name;
-    document.getElementById("confirmNameContainer").style.display="none";
-    document.getElementById("container").style.display="block";
-    startSpin(); // auto spin khi mở game
+function confirmName() {
+  const name = document.getElementById("playerName").value.trim();
+  if (!name) return alert("Nhập tên!");
+
+  if (confirm("Bạn có phải là: " + name + " ?")) {
+    player = name;
+    document.getElementById("nameBox").classList.add("hidden");
+    document.getElementById("gameBox").classList.remove("hidden");
+    spinMusic.play();
   }
 }
 
-/* QUAY */
-function startSpin(){
-  running=true;
-  spin.currentTime=0;
-  spin.play();
-  interval=setInterval(()=>{
-    const fake=Math.floor(Math.random()*1000000+1000000);
-    num.innerText=fake.toLocaleString();
-  },60);
+function weightedRandom() {
+  let min = 1000000;
+  let max = 2000000;
+  let r = Math.random();
+
+  if (r < 0.98) {
+    return Math.floor(min + Math.random() ** 2.5 * (1400000 - min));
+  }
+  return Math.floor(1400000 + Math.random() ** 4 * (max - 1400000));
 }
 
-/* DỪNG */
-function stop(){
-  if(!running) return;
-  running=false;
-  clearInterval(interval);
-  spin.pause();
+function start() {
+  if (running) return;
+  running = true;
+  spinMusic.currentTime = 0;
+  spinMusic.play();
 
-  const result=weightedRandom(1000000,2000000);
-  num.innerText=result.toLocaleString();
-
-  win.currentTime=0;
-  win.play();
-
-  sendResult(result);
-  showNotify(result);
+  timer = setInterval(() => {
+    document.getElementById("number").innerText =
+      weightedRandom().toLocaleString();
+  }, 60);
 }
 
-/* QUAY LẠI */
-function restart(){
-  if(running) clearInterval(interval);
-  num.innerText="------";
-  startSpin();
+function stop() {
+  if (!running) return;
+  running = false;
+  clearInterval(timer);
+
+  spinMusic.pause();
+  winMusic.play();
+
+  result = weightedRandom();
+  document.getElementById("number").innerText = result.toLocaleString();
+
+  sendResult();
+  showPopup();
 }
 
-/* SEND FIREBASE */
-function sendResult(result){
-  db.ref("thom1998").push({
-    name: playerName,
+function sendResult() {
+  db.ref("results").push({
+    name: player,
     number: result,
     time: new Date().toLocaleString(),
-    ua: navigator.userAgent
+    device: navigator.userAgent
   });
 }
 
-/* SHOW/HIDE NOTIFY */
-function showNotify(result){
-  const notify=document.getElementById("notify");
-  document.getElementById("notify-number").innerText=result.toLocaleString();
-  notify.style.display="flex";
+function showPopup() {
+  document.getElementById("popupText").innerText =
+    `CHÚC MỪNG ${player} ĐÃ QUAY ĐƯỢC\n${result.toLocaleString()}`;
+  document.getElementById("popup").classList.remove("hidden");
 }
-function hideNotify(){ document.getElementById("notify").style.display="none"; }
 
-/* SETTINGS */
-document.getElementById("bgInput").onchange=e=>{
-  const url=URL.createObjectURL(e.target.files[0]);
-  document.body.style.backgroundImage=`url(${url})`;
-};
-document.getElementById("spinInput").onchange=e=>{
-  spin.src=URL.createObjectURL(e.target.files[0]); spin.loop=true; spin.play();
-};
-document.getElementById("winInput").onchange=e=>{
-  win.src=URL.createObjectURL(e.target.files[0]);
-};
-
-/* Rainbow Text */
-const rainbowColors=["#FF0000","#FF7F00","#FFFF00","#00FF00","#0000FF","#4B0082","#8B00FF"];
-let rainbowIndex=0;
-setInterval(()=>{
-  const title=document.querySelector("#container h1");
-  title.style.color=rainbowColors[rainbowIndex];
-  num.style.color=rainbowColors[(rainbowIndex+3)%rainbowColors.length];
-  rainbowIndex=(rainbowIndex+1)%rainbowColors.length;
-},100);
+function closePopup() {
+  document.getElementById("popup").classList.add("hidden");
+}
