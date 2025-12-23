@@ -20,20 +20,15 @@ function weightedRandom(min, max) {
   return Math.floor(split + t * (max - split));
 }
 
-/* ===== TỰ ĐỘNG PHÁT NHẠC QUAY KHI LOAD WEB ===== */
-window.addEventListener("load", () => {
-  spin.loop = true;
-  spin.play().catch(() => {
-    console.log("Browser yêu cầu tương tác để play nhạc. Bấm quay sẽ tự động play.");
-  });
-});
-
 /* ===== QUAY ===== */
 function start() {
   if (running) return;
   running = true;
 
-  spin.play(); // Nếu browser chặn autoplay, bấm quay sẽ play
+  spin.pause();
+  win.pause();
+  spin.currentTime = 0;
+  spin.play();
 
   interval = setInterval(() => {
     const fake = Math.floor(Math.random() * 1000000 + 1000000);
@@ -47,13 +42,13 @@ function stop() {
   running = false;
 
   clearInterval(interval);
-  spin.pause(); // Ngắt nhạc quay
+  spin.pause();
 
   const result = weightedRandom(1000000, 2000000);
   num.innerText = result.toLocaleString();
 
   win.currentTime = 0;
-  win.play(); // Phát nhạc thắng
+  win.play();
 
   sendToSheet(result);
 }
@@ -67,14 +62,16 @@ function sendToSheet(result) {
       result: result,
       ua: navigator.userAgent
     }),
-    headers: { "Content-Type": "application/json" }
+    headers: {
+      "Content-Type": "application/json"
+    }
   })
   .then(res => res.text())
   .then(txt => console.log("Sheet:", txt))
   .catch(err => console.error("Sheet error:", err));
 }
 
-/* ===== SETTINGS (thay đổi nhạc & background trực tiếp) ===== */
+/* ===== SETTINGS ===== */
 document.getElementById("bgInput").onchange = e => {
   const url = URL.createObjectURL(e.target.files[0]);
   document.body.style.backgroundImage = `url(${url})`;
@@ -84,8 +81,6 @@ document.getElementById("bgInput").onchange = e => {
 
 document.getElementById("spinInput").onchange = e => {
   spin.src = URL.createObjectURL(e.target.files[0]);
-  spin.loop = true;
-  spin.play();
 };
 
 document.getElementById("winInput").onchange = e => {
