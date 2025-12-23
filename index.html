@@ -2,8 +2,10 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>🎄 QUÀ DÀNH CHO HƯƠNG 🎄</title>
+<title>🎄 QUÀ CHO HƯƠNG 🎄</title>
 <link rel="stylesheet" href="style.css">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 <body>
 
@@ -25,20 +27,23 @@
 
 <!-- CONTAINER CHÍNH -->
 <div id="container">
-  <h1>🎄 “Giáng sinh này anh không tặng em điều gì quá lớn lao, chỉ mong tặng em thêm nhiều yêu thương và bình yên. Chúc em một Noel ấm áp, mãi xinh đẹp và hạnh phúc bên anh.” 🎄</h1>
+  <h1>🎄 CHÚC MỪNG NGƯỜI YÊU CỦA ANH 🎄</h1>
+  <div id="nameInputContainer">
+    <input type="text" id="playerName" placeholder="Nhập tên bạn">
+    <button onclick="start()">BẮT ĐẦU</button>
+  </div>
   <div id="number">------</div>
   <div class="buttons">
-    <button onclick="start()">▶ BẮT ĐẦU</button>
-    <button onclick="stop()">⏹ NHẬN QUÀ</button>
+    <button onclick="stop()">⏹ DỪNG</button>
   </div>
 </div>
 
 <!-- NOTIFY -->
 <div id="notify">
   <div id="notify-content">
-    <div id="notify-text">CHÚC MỪNG HƯƠNG ĐÃ QUAY ĐƯỢC</div>
+    <div id="notify-text">CHÚC MỪNG EM YÊU ĐÃ QUAY ĐƯỢC</div>
     <div id="notify-number">------</div>
-    <button id="notify-ok" onclick="hideNotify()">YÊU ANH <3 </button>
+    <button id="notify-ok" onclick="hideNotify()">YÊU ANH <3</button>
   </div>
 </div>
 
