@@ -21,8 +21,8 @@ body {
 /* ===== CONTAINER CHÍNH ===== */
 #container {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 40%;
+  left: 60%;
   transform: translate(-50%, -50%);
   text-align: center;
   width: 90%;
