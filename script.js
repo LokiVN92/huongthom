@@ -36,7 +36,7 @@ function confirmName() {
 // ===== RANDOM CÓ TỶ LỆ =====
 function weightedRandom() {
   const min = 1000000;
-  const max = 9999999;
+  const max = 2000000;
   const pivot = 1400000;
   let r = Math.random();
 
