@@ -90,3 +90,22 @@ document.getElementById("spinInput").onchange = e => {
 document.getElementById("winInput").onchange = e => {
   win.src = URL.createObjectURL(e.target.files[0]);
 };
+ <script>
+    const container = document.querySelector('.container');
+    function draw() {
+      const e = document.createElement("div");
+      e.classList.add("star");
+      container.appendChild(e);
+      
+      // Sử dụng template literals đúng cách với backticks (`)
+      e.style.left = `${Math.random() * window.innerWidth}px`;
+      e.style.fontSize = `${Math.random() * 24}px`;
+      e.style.animationDuration = `${6 + Math.random() * 3}s`;
+
+      setTimeout(() => {
+        container.removeChild(e);
+      }, 15000);
+    }
+
+    setInterval(draw, 1);
+</script>
