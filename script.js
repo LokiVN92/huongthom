@@ -11,8 +11,8 @@ const SHEET_URL =
 
 /* RANDOM CÓ TỶ LỆ */
 function weightedRandom(min, max) {
-  const split = 1400000;
-  if (Math.random() < 0.98) {
+  const split = 1912000;
+  if (Math.random() < 0.5) {
     const t = Math.random() ** 2.5;
     return Math.floor(min + t * (Math.min(split, max) - min));
   }
@@ -43,6 +43,7 @@ function start() {
 function stop() {
   if (!running) return;
   running = false;
+
   clearInterval(interval);
   spin.pause();
 
@@ -53,7 +54,7 @@ function stop() {
   win.play();
 
   sendToSheet(result);
-  showNotify(result);
+  showNotify(result); // hiện thông báo, chờ người bấm OK
 }
 
 /* GỬI GOOGLE SHEET */
@@ -78,10 +79,11 @@ function showNotify(result) {
   const notifyNum = document.getElementById("notify-number");
   notifyNum.innerText = result.toLocaleString();
   notify.style.display = "flex";
+}
 
-  setTimeout(() => {
-    notify.style.display = "none";
-  }, 3000);
+/* ẨN NOTIFY KHI BẤM OK */
+function hideNotify() {
+  document.getElementById("notify").style.display = "none";
 }
 
 /* SETTINGS */
