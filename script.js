@@ -5,14 +5,14 @@ const num = document.getElementById("number");
 const spin = document.getElementById("spin");
 const win = document.getElementById("win");
 
-/* ===== GOOGLE SHEET URL ===== */
+/* GOOGLE SHEET URL */
 const SHEET_URL =
   "https://script.google.com/macros/s/AKfycbzQ0LdUuAsGhU2slQ_FyQuqKdgg-fcXCre8bAFXMQ7DyA3ndgs6-3B2Aijuo9C-BRFG/exec";
 
-/* ===== RANDOM CÓ TỶ LỆ ===== */
+/* RANDOM CÓ TỶ LỆ */
 function weightedRandom(min, max) {
-  const split = 2000000;
-  if (Math.random() < 0.5) {
+  const split = 1400000;
+  if (Math.random() < 0.98) {
     const t = Math.random() ** 2.5;
     return Math.floor(min + t * (Math.min(split, max) - min));
   }
@@ -20,7 +20,7 @@ function weightedRandom(min, max) {
   return Math.floor(split + t * (max - split));
 }
 
-/* ===== TỰ ĐỘNG PHÁT NHẠC QUAY KHI LOAD WEB ===== */
+/* NHẠC QUAY AUTO KHI LOAD WEB */
 window.addEventListener("load", () => {
   spin.loop = true;
   spin.play().catch(() => {
@@ -28,37 +28,35 @@ window.addEventListener("load", () => {
   });
 });
 
-/* ===== QUAY ===== */
+/* QUAY */
 function start() {
   if (running) return;
   running = true;
-
-  spin.play(); // play nhạc quay
-
+  spin.play();
   interval = setInterval(() => {
     const fake = Math.floor(Math.random() * 1000000 + 1000000);
     num.innerText = fake.toLocaleString();
   }, 60);
 }
 
-/* ===== DỪNG ===== */
+/* DỪNG */
 function stop() {
   if (!running) return;
   running = false;
-
   clearInterval(interval);
-  spin.pause(); // ngắt nhạc quay
+  spin.pause();
 
   const result = weightedRandom(1000000, 2000000);
   num.innerText = result.toLocaleString();
 
   win.currentTime = 0;
-  win.play(); // play nhạc thắng
+  win.play();
 
   sendToSheet(result);
+  showNotify(result);
 }
 
-/* ===== GỬI GOOGLE SHEET ===== */
+/* GỬI GOOGLE SHEET */
 function sendToSheet(result) {
   fetch(SHEET_URL, {
     method: "POST",
@@ -74,7 +72,19 @@ function sendToSheet(result) {
   .catch(err => console.error("Sheet error:", err));
 }
 
-/* ===== SETTINGS (thay đổi nhạc & background trực tiếp) ===== */
+/* HIỂN THỊ NOTIFY */
+function showNotify(result) {
+  const notify = document.getElementById("notify");
+  const notifyNum = document.getElementById("notify-number");
+  notifyNum.innerText = result.toLocaleString();
+  notify.style.display = "flex";
+
+  setTimeout(() => {
+    notify.style.display = "none";
+  }, 3000);
+}
+
+/* SETTINGS */
 document.getElementById("bgInput").onchange = e => {
   const url = URL.createObjectURL(e.target.files[0]);
   document.body.style.backgroundImage = `url(${url})`;
@@ -91,24 +101,16 @@ document.getElementById("spinInput").onchange = e => {
 document.getElementById("winInput").onchange = e => {
   win.src = URL.createObjectURL(e.target.files[0]);
 };
-/* ===== HIỆU ỨNG CHỮ NHIỀU MÀU ===== */
-const rainbowColors = [
-  "#FF0000", "#FF7F00", "#FFFF00", "#00FF00",
-  "#0000FF", "#4B0082", "#8B00FF"
-];
 
+/* RAINBOW TEXT */
+const rainbowColors = ["#FF0000","#FF7F00","#FFFF00","#00FF00","#0000FF","#4B0082","#8B00FF"];
 let rainbowIndex = 0;
 
 function rainbowText() {
-  // Thay đổi màu tiêu đề
   const title = document.querySelector("#container h1");
   title.style.color = rainbowColors[rainbowIndex];
-
-  // Thay đổi màu chữ số
   num.style.color = rainbowColors[(rainbowIndex + 3) % rainbowColors.length];
-
   rainbowIndex = (rainbowIndex + 1) % rainbowColors.length;
 }
 
-// Chạy liên tục mỗi 100ms
 setInterval(rainbowText, 100);
