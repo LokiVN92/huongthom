@@ -1,58 +1,44 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<title>🎄 Quay Số Noel 🎄</title>
-<link rel="stylesheet" href="style.css">
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <meta charset="UTF-8">
+  <title>Quay Số Noel</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase v8 -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 </head>
 <body>
 
-<!-- SETTINGS góc trái -->
-<div id="settings">
-  ⚙
-  <div class="panel">
-    <label>Background
-      <input type="file" id="bgInput" accept="image/*">
-    </label>
-    <label>Nhạc quay
-      <input type="file" id="spinInput" accept="audio/*">
-    </label>
-    <label>Nhạc thắng
-      <input type="file" id="winInput" accept="audio/*">
-    </label>
-  </div>
-</div>
+<div class="bg"></div>
 
-<!-- XÁC NHẬN TÊN -->
-<div id="confirmNameContainer">
-  <input type="text" id="playerName" placeholder="Nhập tên bạn">
+<div class="container" id="nameBox">
+  <h1>🎄 NHẬP TÊN CỦA BẠN 🎄</h1>
+  <input id="playerName" placeholder="Nhập tên..." />
   <button onclick="confirmName()">BẮT ĐẦU</button>
 </div>
 
-<!-- CONTAINER GAME -->
-<div id="container" style="display:none;">
-  <h1>🎄 CHÚC MỪNG NGƯỜI YÊU CỦA ANH 🎄</h1>
+<div class="container hidden" id="gameBox">
+  <h1 class="rainbow">🎄 CHÚC MỪNG NGƯỜI YÊU CỦA ANH 🎄</h1>
   <div id="number">------</div>
+
   <div class="buttons">
-    <button onclick="stop()">⏹ DỪNG</button>
-    <button onclick="restart()">🔄 QUAY LẠI</button>
+    <button onclick="start()">▶ QUAY</button>
+    <button onclick="stop()">⏹ KẾT THÚC</button>
   </div>
 </div>
 
-<!-- NOTIFY -->
-<div id="notify">
-  <div id="notify-content">
-    <div id="notify-text">CHÚC MỪNG EM YÊU ĐÃ QUAY ĐƯỢC</div>
-    <div id="notify-number">------</div>
-    <button id="notify-ok" onclick="hideNotify()">OK</button>
+<div class="popup hidden" id="popup">
+  <div class="popup-content">
+    <h2>🎉 CHÚC MỪNG 🎉</h2>
+    <p id="popupText"></p>
+    <button onclick="closePopup()">OK</button>
   </div>
 </div>
 
-<!-- NHẠC -->
-<audio id="spin" src="spin.mp3" loop></audio>
-<audio id="win" src="win.mp3"></audio>
+<audio id="spinMusic" src="spin.mp3" loop></audio>
+<audio id="winMusic" src="win.mp3"></audio>
 
 <script src="script.js"></script>
 </body>
