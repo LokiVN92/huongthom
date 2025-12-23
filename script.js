@@ -37,7 +37,7 @@ function start() {
       Math.random() * 1000000 + 1000000
     );
     num.innerText = fake.toLocaleString();
-  }, 60);
+  }, 20);
 }
 
 /* ===== DỪNG ===== */
