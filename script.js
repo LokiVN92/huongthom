@@ -1,6 +1,7 @@
 let running=false;
 let interval;
 let playerName="";
+let confirmed=false;
 
 /* Firebase config */
 const firebaseConfig = {
@@ -20,7 +21,7 @@ const num = document.getElementById("number");
 const spin = document.getElementById("spin");
 const win = document.getElementById("win");
 
-/* RANDOM có tỷ lệ */
+/* RANDOM */
 function weightedRandom(min,max){
   const split=1400000;
   if(Math.random()<0.98){ const t=Math.random()**2.5; return Math.floor(min+t*(Math.min(split,max)-min)); }
@@ -28,14 +29,23 @@ function weightedRandom(min,max){
   return Math.floor(split+t*(max-split));
 }
 
-/* QUAY */
-function start(){
+/* XÁC NHẬN TÊN */
+function confirmName(){
   const input = document.getElementById("playerName");
-  if(!input.value.trim()){ alert("Nhập tên bạn trước khi quay!"); return; }
-  playerName=input.value.trim();
-  document.getElementById("nameInputContainer").style.display="none";
+  if(!input.value.trim()){ alert("Nhập tên bạn trước khi bắt đầu!"); return; }
+  const name=input.value.trim();
+  if(confirm(`Bạn có phải là ${name}?`)){
+    playerName=name;
+    document.getElementById("confirmNameContainer").style.display="none";
+    document.getElementById("container").style.display="block";
+    startSpin(); // auto spin khi mở game
+  }
+}
 
+/* QUAY */
+function startSpin(){
   running=true;
+  spin.currentTime=0;
   spin.play();
   interval=setInterval(()=>{
     const fake=Math.floor(Math.random()*1000000+1000000);
@@ -60,9 +70,16 @@ function stop(){
   showNotify(result);
 }
 
+/* QUAY LẠI */
+function restart(){
+  if(running) clearInterval(interval);
+  num.innerText="------";
+  startSpin();
+}
+
 /* SEND FIREBASE */
 function sendResult(result){
-  db.ref("results").push({
+  db.ref("thom1998").push({
     name: playerName,
     number: result,
     time: new Date().toLocaleString(),
