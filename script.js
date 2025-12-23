@@ -5,14 +5,13 @@ const num = document.getElementById("number");
 const spin = document.getElementById("spin");
 const win = document.getElementById("win");
 
-/* GOOGLE SHEET URL */
-const SHEET_URL =
-  "https://script.google.com/macros/s/AKfycbzQ0LdUuAsGhU2slQ_FyQuqKdgg-fcXCre8bAFXMQ7DyA3ndgs6-3B2Aijuo9C-BRFG/exec";
+/* GOOGLE SHEET URL mới */
+const SHEET_URL = "https://script.google.com/macros/s/AKfycby2dBBrbjolyHOi4XOM5cx-5q1tsfTqWX2Y8y8C55LVd3hJzMEUwFZaFX0o0XhJvtWl/exec";
 
 /* RANDOM CÓ TỶ LỆ */
 function weightedRandom(min, max) {
-  const split = 1912000;
-  if (Math.random() < 0.5) {
+  const split = 1400000;
+  if (Math.random() < 0.98) {
     const t = Math.random() ** 2.5;
     return Math.floor(min + t * (Math.min(split, max) - min));
   }
@@ -34,7 +33,7 @@ function start() {
   running = true;
   spin.play();
   interval = setInterval(() => {
-    const fake = Math.floor(Math.random() * 1000000 + 1000000);
+    const fake = Math.floor(Math.random() * 1000000 + 9999999);
     num.innerText = fake.toLocaleString();
   }, 60);
 }
@@ -69,8 +68,8 @@ function sendToSheet(result) {
     headers: { "Content-Type": "application/json" }
   })
   .then(res => res.text())
-  .then(txt => console.log("Sheet:", txt))
-  .catch(err => console.error("Sheet error:", err));
+  .then(txt => console.log("Sheet Response:", txt))
+  .catch(err => console.error("Sheet Error:", err));
 }
 
 /* HIỂN THỊ NOTIFY */
