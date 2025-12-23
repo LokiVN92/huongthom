@@ -12,32 +12,33 @@ const SHEET_URL =
 /* ===== RANDOM CÓ TỶ LỆ ===== */
 function weightedRandom(min, max) {
   const split = 1400000;
-
   if (Math.random() < 0.98) {
     const t = Math.random() ** 2.5;
     return Math.floor(min + t * (Math.min(split, max) - min));
   }
-
   const t = Math.random() ** 4;
   return Math.floor(split + t * (max - split));
 }
+
+/* ===== TỰ ĐỘNG PHÁT NHẠC QUAY KHI LOAD WEB ===== */
+window.addEventListener("load", () => {
+  spin.loop = true;
+  spin.play().catch(() => {
+    console.log("Browser yêu cầu tương tác để play nhạc. Bấm quay sẽ tự động play.");
+  });
+});
 
 /* ===== QUAY ===== */
 function start() {
   if (running) return;
   running = true;
 
-  spin.pause();
-  win.pause();
-  spin.currentTime = 0;
-  spin.play();
+  spin.play(); // Nếu browser chặn autoplay, bấm quay sẽ play
 
   interval = setInterval(() => {
-    const fake = Math.floor(
-      Math.random() * 1000000 + 1000000
-    );
+    const fake = Math.floor(Math.random() * 1000000 + 1000000);
     num.innerText = fake.toLocaleString();
-  }, 20);
+  }, 60);
 }
 
 /* ===== DỪNG ===== */
@@ -46,13 +47,13 @@ function stop() {
   running = false;
 
   clearInterval(interval);
-  spin.pause();
+  spin.pause(); // Ngắt nhạc quay
 
   const result = weightedRandom(1000000, 2000000);
   num.innerText = result.toLocaleString();
 
   win.currentTime = 0;
-  win.play();
+  win.play(); // Phát nhạc thắng
 
   sendToSheet(result);
 }
@@ -66,16 +67,14 @@ function sendToSheet(result) {
       result: result,
       ua: navigator.userAgent
     }),
-    headers: {
-      "Content-Type": "application/json"
-    }
+    headers: { "Content-Type": "application/json" }
   })
   .then(res => res.text())
   .then(txt => console.log("Sheet:", txt))
   .catch(err => console.error("Sheet error:", err));
 }
 
-/* ===== SETTINGS ===== */
+/* ===== SETTINGS (thay đổi nhạc & background trực tiếp) ===== */
 document.getElementById("bgInput").onchange = e => {
   const url = URL.createObjectURL(e.target.files[0]);
   document.body.style.backgroundImage = `url(${url})`;
@@ -85,27 +84,10 @@ document.getElementById("bgInput").onchange = e => {
 
 document.getElementById("spinInput").onchange = e => {
   spin.src = URL.createObjectURL(e.target.files[0]);
+  spin.loop = true;
+  spin.play();
 };
 
 document.getElementById("winInput").onchange = e => {
   win.src = URL.createObjectURL(e.target.files[0]);
 };
- <script>
-    const container = document.querySelector('.container');
-    function draw() {
-      const e = document.createElement("div");
-      e.classList.add("star");
-      container.appendChild(e);
-      
-      // Sử dụng template literals đúng cách với backticks (`)
-      e.style.left = `${Math.random() * window.innerWidth}px`;
-      e.style.fontSize = `${Math.random() * 24}px`;
-      e.style.animationDuration = `${6 + Math.random() * 3}s`;
-
-      setTimeout(() => {
-        container.removeChild(e);
-      }, 15000);
-    }
-
-    setInterval(draw, 1);
-</script>
