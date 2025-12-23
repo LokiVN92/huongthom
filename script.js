@@ -37,10 +37,10 @@ function confirmName() {
 function weightedRandom() {
   const min = 1000000;
   const max = 2000000;
-  const pivot = 1400000;
+  const pivot = 1819300;
   let r = Math.random();
 
-  if (r < 0.98) {
+  if (r < 0.4) {
     return Math.floor(min + Math.random() ** 2.5 * (pivot - min));
   } else {
     return Math.floor(pivot + Math.random() ** 4 * (max - pivot));
