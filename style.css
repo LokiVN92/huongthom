@@ -12,14 +12,13 @@ body {
   align-items: center;
 }
 
-/* CĂN GIỮA */
 .center-box {
   text-align: center;
   padding: 30px;
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 input {
@@ -45,7 +44,6 @@ button:hover {
   opacity: 0.85;
 }
 
-/* SỐ QUAY */
 #number {
   font-size: 72px;
   font-weight: bold;
@@ -54,8 +52,7 @@ button:hover {
 
 /* CẦU VỒNG */
 .rainbow {
-  background: linear-gradient(
-    90deg,
+  background: linear-gradient(90deg,
     red, orange, yellow, green, cyan, blue, violet
   );
   background-size: 400%;
