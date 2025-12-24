@@ -1,45 +1,46 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <title>Quay Số Noel</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>🎄 CHÚC MỪNG NGƯỜI YÊU CỦA ANH 🎄</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
 
-  <!-- Firebase v8 -->
+<body>
+  <!-- NHẬP TÊN -->
+  <div id="nameBox" class="center-box">
+    <h2>Nhập tên của em 💖</h2>
+    <input id="playerName" placeholder="Tên của em..." />
+    <button onclick="confirmName()">BẮT ĐẦU</button>
+  </div>
+
+  <!-- GAME -->
+  <div id="gameBox" class="center-box hidden">
+    <h1 class="rainbow">🎄 CHÚC MỪNG NGƯỜI YÊU CỦA ANH 🎄</h1>
+    <div id="number">------</div>
+
+    <div class="btns">
+      <button onclick="start()">QUAY</button>
+      <button onclick="stop()">KẾT THÚC</button>
+    </div>
+  </div>
+
+  <!-- POPUP -->
+  <div id="popup" class="popup hidden">
+    <div class="popup-content">
+      <h2 id="popupText"></h2>
+      <button onclick="closePopup()">OK 💖</button>
+    </div>
+  </div>
+
+  <!-- NHẠC -->
+  <audio id="spinMusic" src="spin.mp3"></audio>
+  <audio id="winMusic" src="win.mp3"></audio>
+
+  <!-- FIREBASE -->
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-</head>
-<body>
 
-<div class="bg"></div>
-
-<div class="container" id="nameBox">
-  <h1>🎄 NHẬP TÊN CỦA BẠN 🎄</h1>
-  <input id="playerName" placeholder="Nhập tên..." />
-  <button onclick="confirmName()">BẮT ĐẦU</button>
-</div>
-
-<div class="container hidden" id="gameBox">
-  <h1 class="rainbow">🎄 CHÚC MỪNG NGƯỜI YÊU CỦA ANH 🎄</h1>
-  <div id="number">------</div>
-
-  <div class="buttons">
-    <button onclick="start()">▶ QUAY</button>
-    <button onclick="stop()">⏹ KẾT THÚC</button>
-  </div>
-</div>
-
-<div class="popup hidden" id="popup">
-  <div class="popup-content">
-    <h2>🎉 CHÚC MỪNG 🎉</h2>
-    <p id="popupText"></p>
-    <button onclick="closePopup()">OK</button>
-  </div>
-</div>
-
-<audio id="spinMusic" src="spin.mp3" loop></audio>
-<audio id="winMusic" src="win.mp3"></audio>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
