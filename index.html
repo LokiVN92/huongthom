@@ -2,33 +2,44 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Vòng quay may mắn</title>
+  <title>Quay Số Noel</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase v8 -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 </head>
 <body>
 
-  <div class="center-box">
-    <h2>💖 Chào mừng bạn 💖</h2>
+<div class="bg"></div>
 
-    <input id="nameInput" type="text" placeholder="Tên của bạn..." />
-    <br>
+<div class="container" id="nameBox">
+  <h1>🎄 NHẬP TÊN CỦA BẠN 🎄</h1>
+  <input id="playerName" placeholder="Nhập tên..." />
+  <button onclick="confirmName()">BẮT ĐẦU</button>
+</div>
 
-    <button onclick="start()">🎁 Quay số 🎁</button>
+<div class="container hidden" id="gameBox">
+  <h1 class="rainbow">🎄 CHÚC MỪNG NGƯỜI YÊU CỦA ANH 🎄</h1>
+  <div id="number">------</div>
 
-    <div id="number" class="hidden"></div>
-
-    <button id="giftBtn" class="hidden" onclick="showPopup()">🎉 Nhận quà 🎉</button>
+  <div class="buttons">
+    <button onclick="start()">▶ QUAY</button>
+    <button onclick="stop()">⏹ KẾT THÚC</button>
   </div>
+</div>
 
-  <!-- POPUP -->
-  <div id="popup" class="popup hidden">
-    <div class="popup-content">
-      <h2>🎊 Chúc mừng 🎊</h2>
-      <p id="resultText"></p>
-      <button onclick="closePopup()">OK 💖</button>
-    </div>
+<div class="popup hidden" id="popup">
+  <div class="popup-content">
+    <h2>🎉 CHÚC MỪNG 🎉</h2>
+    <p id="popupText"></p>
+    <button onclick="closePopup()">OK</button>
   </div>
+</div>
 
-  <script src="script.js"></script>
+<audio id="spinMusic" src="spin.mp3" loop></audio>
+<audio id="winMusic" src="win.mp3"></audio>
+
+<script src="script.js"></script>
 </body>
 </html>
