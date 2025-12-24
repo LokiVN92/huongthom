@@ -1,103 +1,78 @@
-// 🔥 FIREBASE CONFIG
+// 🔥 Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDaYssLoPgeyBzzBwq7DK2R-dG3uHlhp7M",
+  apiKey: "AIzaSyDaYssLoPgeyBzzBwq7DKR-dG3uHlhp7M",
   authDomain: "lucthom19989.firebaseapp.com",
   databaseURL: "https://lucthom19989-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "lucthom19989",
-  storageBucket: "lucthom19989.firebasestorage.app",
+  storageBucket: "lucthom19989.appspot.com",
   messagingSenderId: "355426108698",
   appId: "1:355426108698:web:65f928b571d9f09a93d8a3"
 };
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-// ===== BIẾN =====
-let player = "";
-let running = false;
 let timer = null;
-let result = 0;
+let current = 0;
+let player = "";
 
-const spinMusic = document.getElementById("spinMusic");
-const winMusic = document.getElementById("winMusic");
+function weightedRandom() {
+  const r = Math.random();
+  if (r < 0.6) return rand(1_000_000, 1_300_000);
+  if (r < 0.9) return rand(1_300_001, 1_600_000);
+  return rand(1_600_001, 2_000_000);
+}
 
-// ===== NHẬP TÊN =====
-function confirmName() {
+function rand(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+window.confirmName = () => {
   const name = document.getElementById("playerName").value.trim();
-  if (!name) return alert("Nhập tên trước nha!");
+  if (!name) return alert("Nhập tên trước nha 💖");
 
-  if (confirm("Bạn có phải là " + name + " Ny của Thơm?")) {
+  if (confirm(`Bạn có phải là ${name} không?`)) {
     player = name;
     document.getElementById("nameBox").classList.add("hidden");
-    document.getElementById("gameBox").classList.remove("hidden");
+    document.getElementById("game").classList.remove("hidden");
   }
-}
+};
 
-// ===== RANDOM CÓ TỶ LỆ =====
-function weightedRandom() {
-  const min = 1000000;
-  const max = 2000000;
-  const pivot = 15000000;
-  let r = Math.random();
-
-  if (r < 0.98) {
-    return Math.floor(min + Math.random() ** 2.5 * (pivot - min));
-  } else {
-    return Math.floor(pivot + Math.random() ** 4 * (max - pivot));
-  }
-}
-
-// ===== START =====
-function start() {
-  if (running) return;
-  running = true;
-
-  spinMusic.currentTime = 0;
-  spinMusic.play().catch(() => {});
+window.start = () => {
+  document.getElementById("number").classList.remove("glow");
+  if (timer) return;
 
   timer = setInterval(() => {
+    current = weightedRandom();
     document.getElementById("number").innerText =
-      weightedRandom().toLocaleString();
+      current.toLocaleString("vi-VN");
   }, 60);
-}
+};
 
-// ===== STOP =====
-function stop() {
-  if (!running) return;
-  running = false;
-
+window.stop = () => {
+  if (!timer) return;
   clearInterval(timer);
-  spinMusic.pause();
+  timer = null;
 
-  result = weightedRandom();
-  document.getElementById("number").innerText = result.toLocaleString();
+  const numberEl = document.getElementById("number");
+  numberEl.classList.add("glow");
 
-  winMusic.currentTime = 0;
-  winMusic.play().catch(() => {});
+  document.getElementById("finalNumber").innerText =
+    current.toLocaleString("vi-VN");
 
-  sendResult();
-  showPopup();
-}
+  document.getElementById("popup").classList.remove("hidden");
 
-// ===== GỬI FIREBASE =====
-function sendResult() {
-  db.ref("results").push({
+  push(ref(db, "results"), {
     name: player,
-    number: result,
-    time: new Date().toLocaleString(),
+    result: current,
+    time: new Date().toLocaleString("vi-VN"),
     device: navigator.userAgent
   });
-}
+};
 
-// ===== POPUP =====
-function showPopup() {
-  document.getElementById("popupText").innerText =
-    `CHÚC MỪNG BẠN YÊU 💖\n\nĐÃ QUAY ĐƯỢC\n${result.toLocaleString()}`;
-  document.getElementById("popup").classList.remove("hidden");
-}
-
-function closePopup() {
+window.closePopup = () => {
   document.getElementById("popup").classList.add("hidden");
-  document.getElementById("number").innerText = "------";
-  winMusic.pause();
-}
+};
