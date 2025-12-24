@@ -3,32 +3,37 @@ firebase.initializeApp({
   apiKey: "AIzaSyDaYssLoPgeyBzzBwq7DKR-dG3uHlhp7M",
   authDomain: "lucthom19989.firebaseapp.com",
   databaseURL: "https://lucthom19989-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "lucthom19989",
+  projectId: "lucthom19989"
 });
 
 const db = firebase.database();
 
-/******** GAME ********/
+/******** STATE ********/
 let timer = null;
 let currentNumber = 0;
 let playerName = "";
 
-/******** RANDOM ********/
+/******** RANDOM: SỐ NHỎ RA NHIỀU ********/
 function weightedRandom() {
-  const r = Math.random();
-  if (r < 0.6) return rand(1000000, 1300000);
-  if (r < 0.9) return rand(1300001, 1600000);
-  return rand(1600001, 2000000);
-}
+  const min = 1000000;
+  const max = 2000000;
 
-function rand(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  // càng lớn → số lớn càng hiếm
+  const exponent = 3.2;
+
+  const r = Math.random();
+  const biased = Math.pow(r, exponent);
+
+  return Math.floor(min + biased * (max - min));
 }
 
 /******** NAME ********/
 function confirmName() {
   const name = document.getElementById("playerName").value.trim();
-  if (!name) return alert("Em chưa nhập tên 💖");
+  if (!name) {
+    alert("Em chưa nhập tên 💖");
+    return;
+  }
 
   if (confirm("Bạn có phải là " + name + " không?")) {
     playerName = name;
@@ -73,7 +78,7 @@ function stop() {
 function showPopup() {
   document.getElementById("popupText").innerHTML =
     `🎉 CHÚC MỪNG ${playerName}<br><br>
-     Em đã nhận được:<br>
+     Em đã quay được:<br>
      <span style="font-size:32px;color:#ff0080">
      ${currentNumber.toLocaleString("vi-VN")}
      </span>`;
@@ -91,7 +96,7 @@ function stopMusic() {
   document.getElementById("winMusic").pause();
 }
 
-/******** FIREBASE SEND ********/
+/******** FIREBASE ********/
 function sendResult() {
   db.ref("results").push({
     name: playerName,
