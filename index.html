@@ -2,45 +2,49 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <title>🎄 Hương 🫶 Thơm  🎄</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎄 Hương 🫶 Thơm 🎄</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <div class="overlay"></div>
 
-  <div class="container">
+<!-- NHẬP TÊN -->
+<div id="nameBox" class="center-box">
+  <h2>💖 Chào bạn đời của anh 💖</h2>
+  <input id="playerName" placeholder="Tên của em..." />
+  <button onclick="confirmName()">🎁 Lấy quà thôi 🎁</button>
+</div>
 
-    <h1 class="title"> Chào bạn đời của anh 💖</h1>
+<!-- GAME -->
+<div id="gameBox" class="center-box hidden">
+  <h1 class="rainbow">
+    🎄 Noel tới rồi! Anh chúc em mãi hạnh phúc và luôn cười thật tươi 🎄
+  </h1>
 
-    <!-- Nhập tên -->
-    <div id="nameBox">
-      <input id="playerName" placeholder="TÊN NGƯỜI YÊU 💖" />
-      <button onclick="confirmName()">BẮT ĐẦU</button>
-    </div>
+  <div id="number" class="glow">------</div>
 
-    <!-- Game -->
-    <div id="game" class="hidden">
-      <div id="number">0</div>
-
-      <div class="buttons">
-        <button onclick="start()">Bắt đầu 💍</button>
-        <button onclick="stop()">Nhận Quà🎁C</button>
-      </div>
-    </div>
+  <div class="btns">
+    <button onclick="start()">💍 Bắt đầu</button>
+    <button onclick="stop()">🎁 Nhận quà</button>
   </div>
+</div>
 
-  <!-- Thông báo -->
-  <div id="popup" class="popup hidden">
-    <div class="popup-content">
-      <h2>🎉 CHÚC MỪNG NGƯỜI YÊU CỦA TÔI 🎉</h2>
-      <p>ĐÃ QUAY ĐƯỢC</p>
-      <div id="finalNumber"></div>
-      <button onclick="closePopup()">OK 💖</button>
-    </div>
+<!-- POPUP -->
+<div id="popup" class="popup hidden">
+  <div class="popup-content">
+    <h2 id="popupText"></h2>
+    <button onclick="closePopup()">OK 💖</button>
   </div>
+</div>
 
-<script type="module" src="script.js"></script>
+<!-- NHẠC -->
+<audio id="spinMusic" src="spin.mp3"></audio>
+<audio id="winMusic" src="win.mp3"></audio>
+
+<!-- FIREBASE v8 -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script src="script.js"></script>
 </body>
 </html>
