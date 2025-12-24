@@ -6,115 +6,97 @@
 body {
   margin: 0;
   height: 100vh;
-  background: url("background.jpg") no-repeat center center fixed;
-  background-size: cover;
+  background: radial-gradient(circle, #ffdde1, #ee9ca7);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.35);
-}
-
-.container {
-  position: relative;
-  z-index: 2;
+/* CĂN GIỮA */
+.center-box {
   text-align: center;
-  color: white;
-}
-
-.title {
-  color: hotpink;
-  font-size: 32px;
-  margin-bottom: 20px;
-}
-
-input {
-  padding: 10px;
-  font-size: 16px;
-}
-
-button {
-  padding: 10px 18px;
-  font-size: 16px;
-  cursor: pointer;
-  margin: 5px;
+  padding: 30px;
 }
 
 .hidden {
   display: none;
 }
 
-/* 🌈 SỐ QUAY */
-#number {
-  font-size: 70px;
-  font-weight: bold;
-  margin: 20px 0;
-
-  background: linear-gradient(
-    270deg,
-    red, orange, yellow, lime, cyan, blue, violet, red
-  );
-  background-size: 400% 400%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  animation: rainbow 3s linear infinite;
+input {
+  padding: 12px;
+  font-size: 18px;
+  border-radius: 8px;
+  border: none;
+  margin: 10px 0;
 }
 
-/* 💥 Glow khi dừng */
-.glow {
-  animation: glow 1s infinite alternate, rainbow 2s linear infinite;
+button {
+  padding: 12px 24px;
+  font-size: 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: #ff4081;
+  color: white;
+  margin: 8px;
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+/* SỐ QUAY */
+#number {
+  font-size: 72px;
+  font-weight: bold;
+  margin: 25px 0;
+}
+
+/* CẦU VỒNG */
+.rainbow {
+  background: linear-gradient(
+    90deg,
+    red, orange, yellow, green, cyan, blue, violet
+  );
+  background-size: 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 5s linear infinite;
 }
 
 @keyframes rainbow {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
+  0% { background-position: 0% }
+  100% { background-position: 400% }
+}
+
+/* PHÁT SÁNG */
+.glow {
+  animation: glow 1.2s infinite alternate;
 }
 
 @keyframes glow {
-  from { filter: drop-shadow(0 0 5px pink); }
-  to { filter: drop-shadow(0 0 20px gold); }
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #ff69b4;
+  }
+  to {
+    text-shadow: 0 0 20px #ff1493, 0 0 40px #ff69b4;
+  }
 }
 
-/* 🎉 POPUP */
+/* POPUP */
 .popup {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0,0,0,0.6);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  z-index: 9999;
 }
 
 .popup-content {
   background: white;
-  color: black;
   padding: 30px;
-  border-radius: 12px;
+  border-radius: 15px;
   text-align: center;
-  animation: zoom 0.4s ease;
-}
-
-#finalNumber {
-  font-size: 48px;
-  font-weight: bold;
-  margin: 15px 0;
-
-  background: linear-gradient(
-    270deg, red, orange, yellow, green, cyan, blue, violet
-  );
-  background-size: 400% 400%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: rainbow 2s linear infinite;
-}
-
-@keyframes zoom {
-  from { transform: scale(0.5); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
 }
