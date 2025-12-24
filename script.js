@@ -33,18 +33,30 @@ function confirmName() {
   }
 }
 
-// ===== RANDOM CÓ TỶ LỆ =====
+// ===== RANDOM CÓ TỶ LỆ (SỐ NHỎ RA NHIỀU HƠN)
+// ===== 4 SỐ CUỐI LUÔN = 8386
 function weightedRandom() {
   const min = 1000000;
   const max = 2000000;
   const pivot = 1400000;
+
   let r = Math.random();
+  let baseNumber;
 
   if (r < 0.98) {
-    return Math.floor(min + Math.random() ** 2.5 * (pivot - min));
+    // 98% nghiêng mạnh về số nhỏ
+    baseNumber = Math.floor(
+      min + Math.pow(Math.random(), 2.5) * (pivot - min)
+    );
   } else {
-    return Math.floor(pivot + Math.random() ** 4 * (max - pivot));
+    // 2% cho vùng số lớn
+    baseNumber = Math.floor(
+      pivot + Math.pow(Math.random(), 4) * (max - pivot)
+    );
   }
+
+  // Ép 4 số cuối = 8386
+  return Math.floor(baseNumber / 10000) * 10000 + 8386;
 }
 
 // ===== START =====
