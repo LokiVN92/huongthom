@@ -26,7 +26,7 @@ function confirmName() {
   const name = document.getElementById("playerName").value.trim();
   if (!name) return alert("Nhập tên trước nha!");
 
-  if (confirm("Bạn có phải là " + name + " ?")) {
+  if (confirm("Bạn có phải là " + name + " Ny của Thơm?")) {
     player = name;
     document.getElementById("nameBox").classList.add("hidden");
     document.getElementById("gameBox").classList.remove("hidden");
@@ -37,10 +37,10 @@ function confirmName() {
 function weightedRandom() {
   const min = 1000000;
   const max = 2000000;
-  const pivot = 1819300;
+  const pivot = 15000000;
   let r = Math.random();
 
-  if (r < 0.4) {
+  if (r < 0.98) {
     return Math.floor(min + Math.random() ** 2.5 * (pivot - min));
   } else {
     return Math.floor(pivot + Math.random() ** 4 * (max - pivot));
@@ -92,7 +92,7 @@ function sendResult() {
 // ===== POPUP =====
 function showPopup() {
   document.getElementById("popupText").innerText =
-    `CHÚC MỪNG EM YÊU 💖\n\nĐÃ QUAY ĐƯỢC\n${result.toLocaleString()}`;
+    `CHÚC MỪNG BẠN YÊU 💖\n\nĐÃ QUAY ĐƯỢC\n${result.toLocaleString()}`;
   document.getElementById("popup").classList.remove("hidden");
 }
 
