@@ -1,50 +1,34 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <title>🎄 Hương 🫶 Thơm 🎄</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Vòng quay may mắn</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<!-- NHẬP TÊN -->
-<div id="nameBox" class="center-box">
-  <h2>💖 Chào bạn đời của anh 💖</h2>
-  <input id="playerName" placeholder="Tên của em..." />
-  <button onclick="confirmName()">🎁 Lấy quà thôi 🎁</button>
-</div>
+  <div class="center-box">
+    <h2>💖 Chào mừng bạn 💖</h2>
 
-<!-- GAME -->
-<div id="gameBox" class="center-box hidden">
-  <h1 class="rainbow">
-    🎄 Noel tới rồi! Anh chúc em luôn hạnh phúc và cười thật tươi 🎄
-  </h1>
+    <input id="nameInput" type="text" placeholder="Tên của bạn..." />
+    <br>
 
-  <div id="number" class="glow">------</div>
+    <button onclick="start()">🎁 Quay số 🎁</button>
 
-  <div class="btns">
-    <button onclick="start()">💍 Bắt đầu</button>
-    <button onclick="stop()">🎁 Nhận quà</button>
+    <div id="number" class="hidden"></div>
+
+    <button id="giftBtn" class="hidden" onclick="showPopup()">🎉 Nhận quà 🎉</button>
   </div>
-</div>
 
-<!-- POPUP (ẨN MẶC ĐỊNH) -->
-<div id="popup" class="popup hidden">
-  <div class="popup-content">
-    <h2 id="popupText"></h2>
-    <button onclick="closePopup()">OK 💖</button>
+  <!-- POPUP -->
+  <div id="popup" class="popup hidden">
+    <div class="popup-content">
+      <h2>🎊 Chúc mừng 🎊</h2>
+      <p id="resultText"></p>
+      <button onclick="closePopup()">OK 💖</button>
+    </div>
   </div>
-</div>
 
-<!-- NHẠC -->
-<audio id="spinMusic" src="spin.mp3"></audio>
-<audio id="winMusic" src="win.mp3"></audio>
-
-<!-- FIREBASE v8 -->
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
