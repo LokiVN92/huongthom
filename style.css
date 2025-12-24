@@ -1,32 +1,21 @@
-* {
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
-
-body, html {
+html, body {
   margin: 0;
-  width: 100%;
+  padding: 0;
   height: 100%;
-  overflow: hidden;
-}
-
-.bg {
-  position: fixed;
-  inset: 0;
-  background: url("background.jpg") center / cover no-repeat;
-  z-index: -1;
-}
-
-.container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0,0,0,0.5);
-  padding: 30px;
-  border-radius: 12px;
-  text-align: center;
+  background: url("background.jpg") no-repeat center center fixed;
+  background-size: cover;
+  font-family: Arial, sans-serif;
   color: white;
+}
+
+.center-box {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .hidden {
@@ -34,51 +23,64 @@ body, html {
 }
 
 input {
-  padding: 10px;
+  padding: 12px;
   font-size: 18px;
-  width: 250px;
+  border-radius: 8px;
+  border: none;
   margin-bottom: 15px;
 }
 
 button {
-  padding: 12px 25px;
+  padding: 12px 22px;
   font-size: 18px;
-  cursor: pointer;
+  border-radius: 10px;
   border: none;
-  border-radius: 8px;
-  margin: 5px;
+  cursor: pointer;
+}
+
+.btns {
+  margin-top: 20px;
 }
 
 #number {
-  font-size: 80px;
-  color: yellow;
+  font-size: 64px;
+  font-weight: bold;
   margin: 20px 0;
+  background: transparent;
 }
 
+.rainbow {
+  animation: rainbow 3s infinite linear;
+}
+
+@keyframes rainbow {
+  0% { color: pink; }
+  25% { color: hotpink; }
+  50% { color: deeppink; }
+  75% { color: violet; }
+  100% { color: pink; }
+}
+
+/* POPUP */
 .popup {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.7);
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 9999;
+}
+
+.popup.hidden {
+  display: none;
 }
 
 .popup-content {
   background: white;
-  padding: 25px;
-  border-radius: 12px;
+  color: black;
+  padding: 30px;
+  border-radius: 15px;
   text-align: center;
-}
-
-.rainbow {
-  animation: rainbow 2s infinite linear;
-}
-
-@keyframes rainbow {
-  0% {color: pink;}
-  25% {color: hotpink;}
-  50% {color: deeppink;}
-  75% {color: violet;}
-  100% {color: pink;}
+  max-width: 90%;
 }
